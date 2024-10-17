@@ -1,79 +1,33 @@
-# README: DDD for Frontend & Backend : Check the brunches.
+# Getting Started
 
-## 🧠 Quick DDD for Frontend
-Domain-Driven Design (DDD) was taught terribly and way too early at UPC (at least in my case), rushed and using Java which I didn’t even know. In these courses we use TypeScript, JavaScript, frameworks, GitHub, APIs, deployments, Java and C#, yet we only knew C++ and PSeInt XD. So this will be a general guide for the backend — if you don’t get the frontend, you might want to drop the course. The short explanation of DDD is: explain it the way it’s written in the main text.
+### Reference Documentation
 
-- **Backend:** Rich entities, strict rules, persistent state in DB.
-- **Frontend:** Lightweight models, quick validations for UX, state in memory (Pinia, Redux).
+For further reference, please consider the following sections:
 
-**Layer Comparison:**
-| Layer          | Backend (.NET, Node)           | Frontend (Vue, Angular) |
-|---------------|--------------------------------|---------------------------|
-| Domain        | Entities + logic + DB         | Simple models            |
-| Application   | Use cases                     | State managers (Pinia)   |
-| Infrastructure| ORM, DB drivers               | Axios, Fetch             |
-| Presentation  | REST Controllers              | UI Components            |
+* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
+* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/3.3.4/maven-plugin)
+* [Create an OCI image](https://docs.spring.io/spring-boot/3.3.4/maven-plugin/build-image.html)
+* [Spring Data JPA](https://docs.spring.io/spring-boot/docs/3.3.4/reference/htmlsingle/index.html#data.sql.jpa-and-spring-data)
+* [Spring Boot DevTools](https://docs.spring.io/spring-boot/docs/3.3.4/reference/htmlsingle/index.html#using.devtools)
+* [Validation](https://docs.spring.io/spring-boot/docs/3.3.4/reference/htmlsingle/index.html#io.validation)
+* [Spring Web](https://docs.spring.io/spring-boot/docs/3.3.4/reference/htmlsingle/index.html#web)
 
-If you’re wondering what something is, those names, whether they’re folders or not — google it LOL. I’m not writing this guide for people to blindly copy-paste.
+### Guides
 
----
+The following guides illustrate how to use some features concretely:
 
-## 🔍 Angular vs Vue
-Angular (the GOAT): Full framework, TypeScript mandatory (because of the rubric), rigid architecture (great for big projects). Vue (the little GOAT): Flexible, easy learning curve, perfect for medium or fast projects. Both use **components**, but Angular feels “corporate,” while Vue is “minimalist.”
+* [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
+* [Accessing data with MySQL](https://spring.io/guides/gs/accessing-data-mysql/)
+* [Validation](https://spring.io/guides/gs/validating-form-input/)
+* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
+* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
+* [Building REST services with Spring](https://spring.io/guides/tutorials/rest/)
 
-In Angular we use **TypeScript** (zzz), and in Vue we use **JavaScript** (classic). If you hate TypeScript or JS, sorry — rubric wins.
+### Maven Parent overrides
 
----
+Due to Maven's design, elements are inherited from the parent POM to the project POM.
+While most of the inheritance is fine, it also inherits unwanted elements like `<license>` and `<developers>` from the
+parent.
+To prevent this, the project POM contains empty overrides for these elements.
+If you manually switch to a different parent and actually want the inheritance, you need to remove those overrides.
 
-## 🌐 API Concepts
-- **API:** The bridge between frontend and backend, exchanging JSON.
-- **Fake API:** Local simulation (e.g., `json-server`) for testing without a real backend.
-- **RESTful API:** Follows REST principles: resources, HTTP methods (`GET`, `POST`), clean URLs.
-
-**Endpoints:** Backend “doors”:
-```
-GET /api/buses
-POST /api/buses
-```
-Fake API equivalent:
-```
-http://localhost:3000/buses
-```
-
----
-
-## 🏗️ Frameworks & Patterns
-- **Backend (.NET and Spring boot):** Mediator, Repository, Unit of Work → decoupling and order.
-- **Frontend (.Net):** State Management (Redux, Pinia), Component Pattern → reactivity and modularity.
-
----
-
-## ⚙️ Backend DDD Essentials
-Here we’re using a system called a **Modular Monolith with layered DDD**. It’s a middle ground and the best practical approach at UPC — stick with it. It’s not ideal for tiny projects, but it gives a solid foundation lol; it’s excellent. Also, it isn’t that complicated once you understand the basics. Just remember, Swagger is God.
-
-- **Architecture:** Modular Monolith with layers:
-  - **Domain:** Interfaces (`IBaseRepository`, `IUnitOfWork`).
-  - **Application:** Orchestration (events, use cases).
-  - **Infrastructure:** Persistence (Entity Framework), ASP configuration, Mediator.
-- **Localhost:** Configured in `launchSettings.json` (e.g., `localhost:5000`).
-- **Swagger:** Generates interactive documentation to test endpoints without frontend.
-  - Easy: `AddSwaggerGen()` and open `/swagger`.
-
----
-
-## 🚀 Deploy to Web with MySQL
-For now we’ll work backend and database together because we haven’t been taught about servers yet — just understand these concepts. That’s all you need to say.
-
-1. **Set DB connection:** In `appsettings.json` → `ConnectionStrings:DefaultConnection`.
-2. **Publish project:**
-   ```bash
-   # Corrected command for publishing
-   dotnet publish -c Release
-   ```
-   Deploy to IIS, Azure, or Docker (or pray to the DevOps gods).
-3. **Database:** Use `EnsureCreated()` for auto table generation.
-4. **Frontend:** Build with `npm run build` and serve via Nginx or similar idk.
-
----
-
-Oh — and yes, macOS sucks. 
