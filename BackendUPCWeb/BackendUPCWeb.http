@@ -1,0 +1,6 @@
+@BackendUPCWeb_HostAddress = http://localhost:5191
+
+GET {{BackendUPCWeb_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
