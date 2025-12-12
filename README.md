@@ -1,4 +1,4 @@
-# README: DDD for Frontend & Backend
+# README: DDD for Frontend & Backend : Check the brunches.
 
 ## 🧠 Quick DDD for Frontend
 Domain-Driven Design (DDD) was taught terribly and way too early at UPC (at least in my case), rushed and using Java which I didn’t even know. In these courses we use TypeScript, JavaScript, frameworks, GitHub, APIs, deployments, Java and C#, yet we only knew C++ and PSeInt XD. So this will be a general guide for the backend — if you don’t get the frontend, you might want to drop the course. The short explanation of DDD is: explain it the way it’s written in the main text.
