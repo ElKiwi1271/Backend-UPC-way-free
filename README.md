@@ -302,4 +302,4 @@ Generate the full C# code for the Files required to implement this Bounded Conte
 
 ---
 
-**Now you are invincible. Go get that 20. 👌**
+**Now you are invincible god, or similar idk**
