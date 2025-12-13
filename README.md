@@ -1,44 +1,32 @@
-# The Ultimate Survival Guide: UPC Web Apps & DDD Architecture
+# The Ultimate Survival Guide: UPC Java Backend & DDD Architecture
 
-Yo, welcome to the **Backend Bible** for the *Desarrollo de Aplicaciones Web* course.
+Yo, welcome to the **Backend Bible** for the Open Source / Web Applications course.
 
 This isn't your average spaghetti code. We are building a **Modular Monolith** using **Domain-Driven Design (DDD)**.
 
-Why?
 
-Because we want that **20/20 on the final exam**, and because in the real world (and in this course), we don't just *"make it work"*—we make it **solid**. JAAAA, Facil es hacerlo, dificil es hacerlo bien. or not python user? /jk
+Because we want that **20/20 on the final exam**, and because in the real world (and with this professor), we don't just *"make it work"*—we make it **solid**. LMAO, "Facil es hacerlo, dificil es hacerlo bien".
 
-This architecture splits our brain into specific **Bounded Contexts** (like Assets, Operations, etc.), but they all rely on one master toolkit: **The Shared Kernel**. Thanks for everything Github.
+This architecture splits our brain into specific **Bounded Contexts** (like Profiles, Learning, Communication), but they all rely on one master toolkit: **The Shared Kernel**. Thanks for everything, GitHub.
 
 ---
 
 ## 🧠 Backend vs. Frontend (The Philosophy)
-
 Based on our handwritten notes, don't get it twisted.
 
 DDD looks different depending on where you stand.
 
-This diagram summarizes our entire mental model:
-
-Important, take it easy with the Diagrams, use the damn diagram **trust me**
-
 ### Backend (The Source of Truth)
-
-This is where we live. Here, **state is persistent**.
-
-If the data says a bus has 40 seats, it has 40 seats, obviously.
-
-We have strict logic and validation.
-
-As the notes say: *"The brain is Shared"*.
+This is where we live now (Java). Here, **state is persistent**.
+If the database says the student has a grade of 15, they have a 15. Period.
+We have strict logic and hard validations.
+As the notes say: "The brain is Shared (Shared Kernel)".
 
 ### Frontend (The Projection)
+This is just a reflection. (Probably your Vue.js with Pinia).
+It handles UI state (spinners, pretty colors) and "pre-validations" to be nice to the user, but the real messy stuff happens in the Backend.
 
-This is just a reflection.
-
-It handles **UI state** (spinners, colors) and *"pre-validations"* to be nice to the user, but the chicha drops in the Backend.
-
-### Practical differences in DDD (Thanks for nothing Ernesto):
+### Practical Differences (The Truth Table)
 
 |Layer|In Backend (Node/Java/C#)|In Frontend (Vue/React/Angular)|
 |---|---|---|
@@ -50,256 +38,121 @@ It handles **UI state** (spinners, colors) and *"pre-validations"* to be nice to
 
 ---
 
-## 🌳 The Starter Pack (File Treeeee)
+## 🌳 The Starter Pack (File Tree)
+Before you start coding like a maniac, this is what the base project looks like in Java.
+These are the files you do **not touch** (unless you want to break everything) and the ones you **must configure**.
 
-Before we start coding like maniacs, this is what the base project looks like.
-
-These are the files you **do not touch** (unless you want to break everything) and the ones you **must configure**.
-
-```Html
-📂 ACME.LearningCenterPlatform.API
-├── 📂 Properties
-│   └── 📄 launchSettings.json <-- 🚦 Localhost & Ports live here [cite: 1]
-├── 📂 Shared <-- 🧠 The Brain (Do not touch!) [cite: 2]
-│   ├── 📂 Domain
-│   ├── 📂 Application
-│   └── 📂 Infrastructure
-├── 📄 appsettings.json <-- 🔑 Secrets & DB Connection [cite: 2]
-└── 📄 Program.cs <-- 🔌 The Main Switch (Wiring) [cite: 2]
-
+```plaintext
+📂 src
+├── 📂 main
+│   ├── 📂 java
+│   │   └── 📂 com.upc.open
+│   │                     ├── 📂 shared <-- 🧠 The Brain (Do not touch! Radioactive zone)
+│   │                     │   ├── 📂 domain
+│   │                     │   └── 📂 infrastructure
+│   │                     └── 📄 BackendUpcOpenApplication.java <-- 🔌 The Main Switch (Wiring)
+│   └── 📂 resources
+│       ├── 📂 static
+│       ├── 📂 templates
+│       └── 📄 application.properties <-- 🔑 The Holy Grail of Config
+└── 📄 pom.xml <-- 📦 Dependencies (If this fails, you cry)
 ```
 
 ---
 
-## 🛠️ The Shared Kernel: "The Toolkit"
+## 🕵️‍♂️ The Login Mystery: Why is it asking for a Password?
+You ran into this, right? You saw a wild login screen and then an empty Swagger saying "No operations defined".
+This happens because Spring Security is paranoid by default. It blocks everything.
+But chill, Spring gives you a temporary password every time you start the app.
 
-The **Shared** folder is the backbone. It is divided into **3 layers**.
-
-Here is how they actually work.
-
----
-
-### 1. Domain Layer ("Da rules")
-
-```Html
-📂 Shared
-└── 📂 Domain
-    └── 📂 Repositories
-        └── 📄 IBaseRepository.cs
-
+**Where is the password?**
+Look at the damn CONSOLE LOG  when the app starts. Looks like:
 ```
 
-**Concept:**
+2025-12-12T19:44:58.490-05:00  WARN 14600 --- [BackendUPCOpen] [  restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
 
-*"Operations without logic"*.
+Using generated security password: b9d41ac8-16ca-4b05-8039-a48b3a894f0d
 
-This is where we define **Contracts (Interfaces)**.
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-We say *"We will save a bus,"* but we don't say **how**.
-
-It's pure abstraction, yes. Like rules. geez...
-
-**Key Files:**
-
-`IBaseRepository`, `IUnitOfWork`.
-
-**Note:**
-
-It's just `void Validate()`. Empty contracts. Interfaz? method with nothin??? Search in google please.
-
----
-
-### 2. Application Layer ("The Bureaucracy")
-
-```Html
-📂 Shared
-└── 📂 Application
-    └── 📂 Internal
-        └── 📂 EventHandlers
 
 ```
-
-**Concept:**
-
-*"Da Rules"*.
-
-This is an empty context used mainly for **reactions (Events)**.
-
-It's the bouncer.
-
-It doesn't hold business logic (that's inside the Entities), but it handles notifications and activity.
-
-**Role:**
-
-Apply direct in BD... Inject. 
-
----
-
-### 3. Infrastructure Layer ("The Logic")
-
-```Html
-📂 Shared
-└── 📂 Infrastructure
-    ├── 📂 Persistence
-    ├── 📂 Interfaces (ASP)
-    └── 📂 Mediator
-
-```
-
-**Concept:**
-
-*"We have to do... Ok, the correct way is..."*.
-
-This is where the magic (and the dirty work) happens.
-
-It has three heads:
-
-- **A. Persistence (The Bookkeeper):**
-
-Handles the Database Entity Framework. Does the SQL work.
-
-Magic: It automatically converts our C# code (`StudentId`) to MySQL format (`student_id`) using snake_case extensions.
-
-- **B. ASP (The Configuration):**
-
-Handles the "Interreg" / Configuration.
-
-Forces our URLs to look professional (**kebab-case**) so we don't get points deducted.
-
-- **C. Mediator (The Switchboard):**
-
-Pattern: `Class A -> Mediator -> Class B`.
-
-It is a typical software pattern. Take it easy, search in google.
-
-It decouples everything. Instead of classes talking directly, they send messages through here.
+Heads up: Every time you restart the server, that password CHANGES. If you want to remove this, configure `SecurityConfig.java`. `user:user`
 
 ---
 
 ## ⚙️ Configuration: Where to Click
+### 1. pom.xml (The Heart of Maven) 📦
+This is where you tell Java which libraries to download.
+Modify only to add OpenAPI (Swagger), MySQL Driver, or Lombok.
+If you see red in your code, reload Maven: Right-click -> Maven -> Reload Project.
 
-Okay, so where do we actually set up the project to run on our machine?
+### 2. application.properties (Where the Magic Lives) 🛢️
+This file in `src/main/resources` controls everything.
 
----
-
-### 1. MySQL Connection 🛢️ Becouse they want, I personally prefered PostgreSQL, because...it is open source, and free. I like it.
-
-You define where the database lives here.
-
-**Location:**
-
-`appsettings.json`
-
-```Html
-📂 ACME.LearningCenterPlatform.API
-└── 📄 appsettings.json <-- EDIT THIS
-
+**MySQL Connection:**
+```
+spring.datasource.url=jdbc:mysql://localhost:3306/your_database_name
+spring.datasource.username=root
+spring.datasource.password=your_mysql_password
 ```
 
-**What to do:**
-
-Change `ConnectionStrings:DefaultConnection`.
-
-Make sure `user=root` and password match your MySQL Workbench.
-
----
-
-### 2. Localhost & Ports 🚦
-
-This controls the "Play" button in Visual Studio/Rider.
-
-**Location:**
-
-`Properties/launchSettings.json`
-
-```Html
-📂 Properties
-└── 📄 launchSettings.json <-- HERE
-
+**Localhost & Ports:**
 ```
-
-**What to do:**
-
-Look for `applicationUrl`.
-
-This is where `localhost:5000` or `localhost:8080` is defined.
-
-This is also where the browser knows to launch **Swagger** automatically (`"launchUrl": "swagger"`).
-
----
-
-### 3. The Endpoints (Where API meets World) 🔌
-
-You might be asking, *"Where are the endpoints generated?"*
-
-They are defined in your **Controllers** (inside your specific Bounded Contexts, e.g., `Assets/Interfaces/REST`), but they are **Registered and Mapped here**:
-
-**Location:**
-
-`Program.cs`
-
-```Html
-📂 ACME.LearningCenterPlatform.API
-└── 📄 Program.cs <-- THE BOSS
-
+server.port=8080
 ```
+Swagger lives at: `http://localhost:8080/swagger-ui.html`
 
-**What happens here:**
-
-- **Wiring:**
-
-We perform Dependency Injection (`builder.Services.AddScoped...`).
-
-- **Mapping:**
-
-`app.MapControllers()` tells the app to scan our code and find all the `[HttpPost]` and `[HttpGet]` tags.
-
-- **Swagger:**
-
-`builder.Services.AddSwaggerGen()` builds the UI documentation so we can test without a Frontend.
-
-- **DB Creation:**
-
-`context.Database.EnsureCreated()` creates the tables for us automatically (**lazy dev life hack**).
-
----
-
-
-
-## 🚨 Emergency Kit JAJAJAJ, maybe?
-
-Use this with responsability.
-
-If you need to create a new Bounded Context (like `Inventory`, `Sales`, `Booking`) from scratch based on a PDF requirement, just **Copy & Paste** this prompt into your favorite AI (Copilot/ChatGPT), paste your exam constraints below it, and watch the magic happen.
-
----
-
-### 📜 The Prompt to Rule Them All
-
-```plaintext
-Act like a Senior .NET Software Architect expert in Domain-Driven Design (DDD) and ASP.NET Core.
-
-CONTEXT & ARCHITECTURE:
-- Project: ASP.NET Core Web API (.NET 9).
-- Architecture: Modular Monolith with DDD Layers (Domain, Application, Infrastructure).
-- Base Logic: I have a 'Shared Kernel' that provides IBaseRepository, IUnitOfWork.
-
-REQUIREMENTS FOR YOU TO IMPLEMENT:
-1. **Structure:** Create the folder structure: Domain/Model/Aggregates, Domain/Repositories, Application/Services, Infrastructure/Persistence.
-2. **Domain:** Create the Entities (Aggregates) with strict validations in the constructor.
-3. **Infrastructure:** Use Fluent API (IEntityTypeConfiguration) for DB mapping.
-4. **Interfaces:** Use REST Controllers with 'kebab-case' routes. Use the 'Assets' pattern.
-5. **Naming:** PascalCase for C# names, snake_case for Database (handled by Shared).
-6. **Inputs:** I will provide the list of Attributes, Business Rules, and Relationships.
-
-MY SPECIFIC EXAM REQUIREMENTS (DATA):
-[!!! PASTE YOUR EXAM TEXT / PDF CONTENT HERE !!!]
-[Example: Create a 'Bus' entity with Plate, Seats... Rules: Plate must be unique.]
-
-OUTPUT:
-Generate the full C# code for the Files required to implement this Bounded Context.
+**JPA & Hibernate:**
+```
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
 ```
 
 ---
 
-**Now you are invincible. Go get that 20. 👌**
+## 🚨 Emergency Kit JAJAJAJA  oh no again 
+Use this responsibly (o no, quien sabe, no me es relevante).
+The promptitacion
+
+```plaintextAct as a Senior Software Architect expert in Java 21+, Spring Boot 3.x, and Domain-Driven Design (DDD).
+
+I need you to generate the code for a specific Bounded Context based on an exam requirement.
+
+### 1. ARCHITECTURE & STRUCTURE RULES (STRICT)
+- **Architecture:** Layered DDD (Domain, Application, Interfaces, Infrastructure).
+- **Format:** Modular Monolith.
+- **DTOs:** Use Java `records` for all Input/Output DTOs (Immutable).
+- **ORM:** Spring Data JPA.
+- **Boilerplate:** Use Lombok (`@Data`, `@Getter`, `@NoArgsConstructor`, `@AllArgsConstructor`) everywhere applicable.
+
+### 2. CODING STANDARDS
+- **Database:** MySQL. Use `snake_case` for all table and column names (`@Column(name="...")`).
+- **URLs:** Kebab-case for endpoints (e.g., `/api/v1/inspection-records`).
+- **Auditing:** All Aggregates MUST include `createdAt` and `updatedAt` using Spring Auditing (`@CreatedDate`, `@LastModifiedDate`).
+- **Value Objects:** Business identifiers (like UUIDs/Codes) MUST be implemented as **@Embeddable Value Objects**, not simple Strings.
+
+### 3. CRITICAL IMPLEMENTATION DETAILS
+- **Repository:** Extend `JpaRepository`.
+- **Controller:** Return `ResponseEntity<ResourceDTO>`. Use `HttpStatus.CREATED` for POST.
+- **Events:** If the requirements mention "emitting an event" or "side effects" (like creating a task when a value is out of range), implement a Domain Event using `ApplicationEventPublisher`.
+
+### 4. YOUR TASK
+Generate the following files for the requested Bounded Context:
+1.  **The Aggregate Root Entity** (including the Embedded ID class and Audit fields).
+2.  **The Repository Interface**.
+3.  **The Command Service / Interface** (Business Logic & Event Publishing).
+4.  **The Controller** (REST Endpoint).
+5.  **The DTO Records** (CreateResource, ResourceResponse).
+
+---
+### 5. INPUT DATA (FROM EXAM)
+
+**Project Name:** [NOMBRE DEL PROYECTO, EJ: si729ebu20211000]
+**Root Package:** [PAQUETE RAIZ, EJ: com.plassertheurer.platform.u20211000]
+
+**SCENARIO & RULES:**
+[!!! PEGA AQUÍ TODO EL TEXTO DEL PDF DEL ENUNCIADO, REGLAS DE NEGOCIO Y CAMPOS !!!]
+```
+
+now u are god, or something similar. Any question about DDD check the brunch App Web, its better because i need my final exam to approve XD
