@@ -1,0 +1,7 @@
+package com.backend.upc.open.shared.interfaces.rest.resources;
+
+/**
+ * Message Resource
+ */
+public record MessageResource(String message) {
+}
