@@ -1,4 +1,4 @@
-# The Ultimate Survival Guide: UPC Java Backend & DDD Architecture
+# The Ultimate Survival Guide: UPC Open Source Backend & DDD Architecture
 
 Yo, welcome to the **Backend Bible** for the Open Source
 
