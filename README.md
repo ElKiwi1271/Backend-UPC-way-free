@@ -1,6 +1,6 @@
 # The Ultimate Survival Guide: UPC Java Backend & DDD Architecture
 
-Yo, welcome to the **Backend Bible** for the Open Source / Web Applications course.
+Yo, welcome to the **Backend Bible** for the Open Source
 
 This isn't your average spaghetti code. We are building a **Modular Monolith** using **Domain-Driven Design (DDD)**.
 
